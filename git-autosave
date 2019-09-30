@@ -22,13 +22,14 @@ function save {
         git checkout -b $autosave_branch
     fi
 
-    git add -A
+    git add -A .
 
-    NOW=$(date)
-
-    git commit -m 'git-autosave at $NOW'
+    git commit -m "git-autosave at $(date)"
 }
 
 
 # read sub-sub command
+
+# this is a test
+
 save
