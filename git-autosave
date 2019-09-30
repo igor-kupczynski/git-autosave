@@ -1,0 +1,34 @@
+#!/bin/bash
+set -e
+
+
+# assuming the subcommand is "save"
+
+function get_current_branch() {
+    git branch | grep \* | cut -d ' ' -f2
+}
+
+function save {
+    local work_branch="$(get_current_branch)"
+
+    # TODO: fail if can't get workbranch name
+
+    local autosave_branch
+
+    if [[ $work_branch == autosave/* ]]; then
+        autosave_branch=$work_branch
+    else
+        autosave_branch="autosave/$work_branch"
+        git checkout -b $autosave_branch
+    fi
+
+    git add -A
+
+    NOW=$(date)
+
+    git commit -m 'git-autosave at $NOW'
+}
+
+
+# read sub-sub command
+save
